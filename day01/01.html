@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <!--<script src="https://unpkg.com/vue@3"></script>-->
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="age"/> <!--태그 안에서 변수를 사용할 때는 v-model을 사용한다.-->
+        <h1 v-once>저는 {{ age  }}살 입니다.</h1> <!-- v-once : 잠구기 -->
+        <h1>저는 {{ age  }}살 입니다.</h1>
+        <p v-bind="attribute">{{ aboutMe }}</p> <!--v-bind 생략 가능 v-...-->
+        <div v-html="content"></div>
+        <button v-bind:disabled="disable">확인 버튼</button> <br> <!--boolean 속성 disabled-->
+        <a href="" v-on:click.prevent="addAge">나이 증가</a> <!--prevent : 기본 기능 제거 ( 새로고침 기능 제거)-->
+    </div>
+    
+    <script>
+        const instance = Vue.createApp({ // 인스턴스 생성 (정보 뭉치를 만들음)
+            // template: `
+            // <input type="text" v-model="age"/>
+            // <h1>저는 {{ age }}살 입니다.</h1>
+            // <button v-on:click="addAge">나이 증가</button>
+            // ` ,
+            data() {  // data: function() {}
+                return {
+                    attribute: {
+                        title: 'hello',
+                        id: 'ptag',
+                        class: 'ptag',
+                        style: 'color: red'
+                    },
+                    disable: true,
+                    age: 49,
+                    att: 'title',
+                    text: "오늘은 흐린 날씨다",
+                    content: '<strong>스트롱</strong>',
+                }
+            },
+            computed: {
+                aboutMe() {
+                    return `저의 나이는 ${this.age}입니다.`
+                }
+            },
+            methods: {
+                addAge() {
+                    this.age++
+                }
+            },
+            beforeCreated() {},
+            created() {
+                console.log('인스턴스 만들고 돔 연결')
+            }
+        })
+        console.log(instance)
+        instance.mount('#app'); // .mount(): html과 연결시켜주기
+    </script>
+</body>
+</html>

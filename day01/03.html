@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text"/>
+        <button v-on:decrease>감소</button>
+        <button@:click.once="increase(m>@:click="increase($event, 10)">증가</button>
+            <p @:click.stop="some">결과가: {{ number }}</p>
+    </body>
+        <input 
+            type="text" 
+            v-model="name" />
+        <h1>{{ name }}의 소개</h1>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    name: '장현지',
+                    number: 100
+                }
+            },
+            method: {
+                setName(event) {
+                    console.log(event.target.value);
+                    this.name = event.target.value;
+                },
+                increase(num) {
+                    this.number -= num;
+                },
+                decrease(ev, num) {
+                    this.number += num;
+                    console.log(ev.target);
+                }
+            }
+
+        }).mount('#app')
+    </script>
+</body>
+</html>

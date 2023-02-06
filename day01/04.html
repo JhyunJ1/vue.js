@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>뷰 이벤트</h1>
+        <h2>이벤트로 할일</h2>
+        <button v-on:click="increase(4)">더하기</button>
+        <button v-on:click="decrease(4)">빼기</button>
+        <p>결과: {{ counter }}</p>
+        <input type="text" v-model="myName" />
+        <p>{{ showName }}</p>  <!-- method로 사용시 ui가 업데이트 될 때 마다 실행 그래서 아까 525로 표시됨. -> computed 사용 -->
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                counter: 10,
+                myName: '',
+                };
+            },
+            computed: {
+                showName() {
+                    console.log('실행됐음!');
+                    if (this.myName === '') return '';
+                    return '장' + this.myName;
+                },
+            },
+            watch: {
+                myName(newData, oldData) {
+                    if (newData === '현지') {
+                        console.log('ok');
+                    }
+                }
+            },
+            methods: {
+                
+                setName(event) {
+                this.myName = event.target.value;
+                },
+                increase(num) {
+                this.counter += num;
+                },
+                decrease(num) {
+                this.counter -= num;
+                },
+            }
+        }).mount('#app');
+    </script>
+    
+</body>
+</html>
