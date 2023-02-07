@@ -16,7 +16,11 @@
         <div v-else>
             <h2>칼로리 기록</h2>
             <ul>
-                <li v-for="(item, i) in myKcal">{{ myKcal[i].date }}: {{ myKcal[i].value + 'kcal' }}</li>
+                <li v-for="(item, i) in myKcal" :key="item.value">
+                    {{ myKcal[i].date }}: {{ myKcal[i].value + 'kcal' }}
+                    <input type="text"/>
+                    <a href="" @:click.prevent="del(i)">삭제</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -40,6 +44,9 @@
                     this.myKcal.push({date:`${year}-${month}-${date}`, value: this.kcal});
                     this.kcal = '';
                 },
+                del(i) {
+                    this.myKcal.splice(i, 1)
+                }
             },
             
         })
