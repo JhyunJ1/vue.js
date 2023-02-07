@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>칼로리 관리</h1>
+        <input type="text" placeholder="섭취한 칼로리를 입력하세요" v-model="kcal"/>
+        <button @:click="input()">입력</button>
+        <p v-if="myKcal.length === 0">아직 입력하지 않았습니다.</p>
+        <div v-else>
+            <h2>칼로리 기록</h2>
+            <ul>
+                <li>2023-02-06: 2000kcal</li>
+                <li v-if="myKcal.length != 0">{{ myKcal[0] }}</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    myKcal: [],
+                }
+            },
+            methods: {
+                input() {
+                    this.myKcal.push(this.kcal);
+                },
+            },
+            watch: {
+                kcal(newData, oldData) {
+                    let now = new Date();
+                    let year = now.getFullYear();
+                    let month = now.getMonth() + 1;
+                    let date = now.getDate();
+                    now = year+'-'+month+'-'+date;
+                    return {now, newData};
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>

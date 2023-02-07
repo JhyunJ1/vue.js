@@ -13,10 +13,13 @@
         .text {
             width: 150px;
             height: 150px;
-            border: 2px solid black;
+            border: 2px solid white;
             margin: 15px;
+            
         }
-        
+        .red {border-color: red;}
+        .blue {border-color: blue;}
+        .green {border-color: green;}
 
     </style>
     <script src="https://unpkg.com/vue@3"></script>
@@ -24,16 +27,16 @@
 <body>
     <div id="app">
         <p 
-            class="text" 
-            v-bind:style="{borderColor: text1 ? 'red' : 'black'}"
+            class="text"
+            :class="text1CSS" 
             v-on:click="clickedText('red')">첫번째 글입니다.</p>
         <p 
-            class="text" 
-            v-bind:style="{borderColor: text2 ? 'blue' : 'black'}"
+            class="text"
+            :class="text2CSS" 
             v-on:click="clickedText('blue')">두번째 글입니다.</p>
         <p 
-            class="text" 
-            v-bind:style="{borderColor: text3 ? 'green' : 'black'}"
+            class="text"
+            :class="text3CSS" 
             v-on:click="clickedText('green')">세번째 글입니다.</p>
     </div>
     
@@ -47,12 +50,16 @@
                     text3: false,
                 }
             },
+            computed: {
+                text1CSS() { return {red: this.text1} },
+                text2CSS() { return {blue: this.text2} },
+                text3CSS() { return {green: this.text3} },
+            },
             methods: {
                 clickedText(color) {
-                    if (color === 'red') this.text1 = true;
-                    if (color === 'blue') this.text2 = true;
-                    if (color === 'green') this.text3 = true;
-                                        
+                    if (color === 'red') this.text1 = !this.text1;
+                    if (color === 'blue') this.text2 = !this.text2;
+                    if (color === 'green') this.text3 = !this.text3;           
                 }
             }
         }).mount('#app');

@@ -13,8 +13,9 @@
         .text {
             width: 150px;
             height: 150px;
-            border: 2px solid black;
+            border: 2px solid white;
             margin: 15px;
+            
         }
         .on {
             border-color: red;
@@ -26,13 +27,13 @@
 <body>
     <div id="app">
         <p 
-            :class="text1 ? 'text on' : 'text' " 
+            :class="{text: true, on: text1}" 
             v-on:click="clickedText('red')">첫번째 글입니다.</p>
         <p 
-            class="text" 
+            :class="{text: true, on: text2}" 
             v-on:click="clickedText('blue')">두번째 글입니다.</p>
         <p 
-            class="text" 
+            :class="{text: true, on: text3}" 
             v-on:click="clickedText('green')">세번째 글입니다.</p>
     </div>
     
