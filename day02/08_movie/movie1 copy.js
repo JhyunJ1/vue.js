@@ -6,7 +6,6 @@
     Vue.createApp({
         data() {
             return {
-                
                 rateMach: {
                     '0': '전체관람가',
                     '12': '12세이상 관람가',
@@ -96,11 +95,11 @@
                     week: 83777
                     }
                 ],
-                state: 'reserve',
+                state: 'ticketing',
                 order: {
-                    reserve: 'on',
-                    star: '',
-                    open: '',
+                    ticketing: 'on',
+                    score: '',
+                    openDate: '',
                     week: '',
                     sale: '',
                 }
@@ -109,28 +108,38 @@
         computed: {
         },
         methods: {
-            setContext(ord) {
-                let order_key = Object.keys(this.order)
-
+            setContext(ev) { // 상태 바꾸기
+                let id = ev.target.id;
+                this.state = id;
+                console.log(this.state, ev.target.id)
+                this.setCurrentTab(ev.target.id)
+            },
+            setCurrentTab(id) { // on 주기
+                let order_key = Object.keys(this.order);
                 for (let key of order_key) {
-                    this.order[key] = ''
-
-                    if(key === ord) {
-                        this.order[ord] = 'on'
-                        this.state=ord
+                    this.order[key] = '';
+                    if (key === id) {
+                        this.order[id] = 'on';
                     }
                 }
             }
         },
         watch: {
-
+            state(newData, oldData) { // state 변수를 지켜보는 함수
+                // 바뀐 탭에 따라 소팅하기
+                let order_key = Object.keys(this.order)
+                for (let key of order_key) {
+                    if (newData === key)
+                    this.movies = this.movies.sort((a,b) => b[key] - a[key])
+                }
+            }
         },
         created() {
             for (let i = 0; i < this.movies.length; i++) {           
                 let movie = this.movies[i]
                 this.movies[i].rate = [movie.rate, this.rateMach[String(movie.rate)]]
             }
-            this.movies = this.movies.sort((a, b) => b.score - a.score);
+            this.movies = this.movies.sort((a, b) => b.ticketing - a.ticketing);
         },
     }).mount('.movie')
     //app.mount(".movie");

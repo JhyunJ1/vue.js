@@ -12,12 +12,12 @@
 
 <body>
   <div class="movie">
-    <ul class="tab" > <!--버블링-->
-      <li :class="order.reserve"><a href="" @click.prevent="setContext('reserve')">예매순</a></li>
-      <li :class="order.star"><a href="" @click.prevent="setContext('star')">평점순</a></li>
-      <li :class="order.open"><a href="" @click.prevent="setContext('open')">개봉일순</a></li>
-      <li :class="order.week"><a href="" @click.prevent="setContext('week')">주말관객순</a></li>
-      <li :class="order.sale"><a href="" @click.prevent="setContext('sale')">다운로드순</a></li>
+    <ul class="tab" @click.prevent="setContext($event)"> <!--버블링 방지-->
+      <li :class="order.ticketing"><a href="" id="ticketing">예매순</a></li>
+      <li :class="order.score"><a href="" id="score">평점순</a></li>
+      <li :class="order.openDate"><a href="" id="openDate">개봉일순</a></li>
+      <li :class="order.week"><a href="" id="week">주말관객순</a></li>
+      <li :class="order.sale"><a href="" id="sale">다운로드순</a></li>
     </ul>
     <br>
 
@@ -29,35 +29,35 @@
             <strong class="rank">{{ i + 1 }}</strong>
             <img class="poster" :src="movie.src" :alt="movie.name"/>
             <!-- 예매순 -->
-            <span class="desc" v-if="state==='reserve'">
+            <span class="desc" v-if="state==='ticketing'">
               <i class="reserve title">예매율</i>
-              <em class="reserve data">9292827</em>
+              <em class="reserve data">{{ movie.ticketing }}</em>
             </span>
             <!-- 평점순  -->
-            <span class="desc" v-if="state==='star'">
+            <span class="desc" v-if="state==='score'">
                 <i class="star"><b :style=" 'width:' + (movie.score * 10) +'%'"></b></i>
                 <em class="score">{{ movie.score }}</em>
             </span>
             <!-- 개봉일순 -->
-            <span class="desc" v-if="state==='open'">
-              <em class="open data"> 9.11 <b>개봉</b></em>
+            <span class="desc" v-if="state==='openDate'">
+              <em class="open data"> {{ movie.openDate }} <b>개봉</b></em>
             </span>
             <!-- 주말관객순 -->
             <span class="desc" v-if="state==='week'">
               <i class="week title">주말관객</i>
-              <em class="week data">239282 명</em>
+              <em class="week data">{{ movie.week }} 명</em>
             </span>
             <!-- 판매율순 -->
             <span class="desc" v-if="state==='sale'">
               <i class="sale title">판매율</i>
-                <em class="sale data">23 %</em>
+                <em class="sale data">{{ movie.sale }} %</em>
             </span>
           </a>
       </li>
     </ol>
   </div>
 
-  <script type="module" src="./movie1.js"></script>
+  <script type="module" src="./movie1 copy.js"></script>
 </body>
 
 </html>
