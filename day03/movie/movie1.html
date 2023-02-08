@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/movie1.css">
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div class="movie">
+    <ul class="tab" @click.prevent="setContext($event)"> <!--버블링 방지-->
+      <li :class="order.ticketing"><a href="" id="ticketing">예매순</a></li>
+      <li :class="order.score"><a href="" id="score">평점순</a></li>
+      <li :class="order.openDate"><a href="" id="openDate">개봉일순</a></li>
+      <li :class="order.week"><a href="" id="week">주말관객순</a></li>
+      <li :class="order.sale"><a href="" id="sale">다운로드순</a></li>
+    </ul>
+    <br>
+
+    <ol class="list">
+      <li v-for="(movie, i) in movies">
+          <a href="">
+            <h4 class="hide">{{ movie.name }}</h4>
+            <span :class="['hide', 'rate', 'rate' + movie.rate[0]]">{{ movie.rate[1] }}</span>
+            <strong class="rank">{{ i + 1 }}</strong>
+            <img class="poster" :src="movie.src" :alt="movie.name"/>
+            <!-- 예매순 -->
+            <span class="desc" v-if="state==='ticketing'">
+              <i class="reserve title">예매율</i>
+              <em class="reserve data">{{ movie.ticketing }}</em>
+            </span>
+            <!-- 평점순  -->
+            <span class="desc" v-else-if="state==='score'">
+                <i class="star"><b :style=" 'width:' + (movie.score * 10) +'%'"></b></i>
+                <em class="score">{{ movie.score }}</em>
+            </span>
+            <!-- 개봉일순 -->
+            <span class="desc" v-else-if="state==='openDate'">
+              <em class="open data"> {{ movie.openDate }} <b>개봉</b></em>
+            </span>
+            <!-- 주말관객순 -->
+            <span class="desc" v-else-if="state==='week'">
+              <i class="week title">주말관객</i>
+              <em class="week data">{{ movie.week }} 명</em>
+            </span>
+            <!-- 판매율순 -->
+            <span class="desc" v-else-if="state==='sale'">
+              <i class="sale title">판매율</i>
+                <em class="sale data">{{ movie.sale }} %</em>
+            </span>
+          </a>
+      </li>
+    </ol>
+  </div>
+
+  <script type="module" src="./movie1 copy.js"></script>
+</body>
+
+</html>
