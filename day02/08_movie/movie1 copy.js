@@ -109,9 +109,11 @@
         },
         methods: {
             setContext(ev) { // 상태 바꾸기
+                if (ev.target.tagName !== 'A') return;
+
                 let id = ev.target.id;
+                
                 this.state = id;
-                console.log(this.state, ev.target.id)
                 this.setCurrentTab(ev.target.id)
             },
             setCurrentTab(id) { // on 주기

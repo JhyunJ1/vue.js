@@ -8,8 +8,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="./css/movie1.css">
   <script src="https://unpkg.com/vue@3"></script>
-</head> 
-
+</head>
 <body>
   <div class="movie">
     <ul class="tab" @click.prevent="setContext($event)"> <!--버블링 방지-->
@@ -34,21 +33,21 @@
               <em class="reserve data">{{ movie.ticketing }}</em>
             </span>
             <!-- 평점순  -->
-            <span class="desc" v-if="state==='score'">
+            <span class="desc" v-else-if="state==='score'">
                 <i class="star"><b :style=" 'width:' + (movie.score * 10) +'%'"></b></i>
                 <em class="score">{{ movie.score }}</em>
             </span>
             <!-- 개봉일순 -->
-            <span class="desc" v-if="state==='openDate'">
+            <span class="desc" v-else-if="state==='openDate'">
               <em class="open data"> {{ movie.openDate }} <b>개봉</b></em>
             </span>
             <!-- 주말관객순 -->
-            <span class="desc" v-if="state==='week'">
+            <span class="desc" v-else-if="state==='week'">
               <i class="week title">주말관객</i>
               <em class="week data">{{ movie.week }} 명</em>
             </span>
             <!-- 판매율순 -->
-            <span class="desc" v-if="state==='sale'">
+            <span class="desc" v-else-if="state==='sale'">
               <i class="sale title">판매율</i>
                 <em class="sale data">{{ movie.sale }} %</em>
             </span>
