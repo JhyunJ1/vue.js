@@ -108,11 +108,13 @@
         computed: {
         },
         methods: {
+            setOrder(cxt) {
+                this.movies = this.movies.sort((a,b) => b[cxt] - a[cxt])
+            },
             setContext(ev) { // 상태 바꾸기
                 if (ev.target.tagName !== 'A') return;
 
                 let id = ev.target.id;
-                
                 this.state = id;
                 this.setCurrentTab(ev.target.id)
             },
@@ -132,7 +134,7 @@
                 let order_key = Object.keys(this.order)
                 for (let key of order_key) {
                     if (newData === key)
-                    this.movies = this.movies.sort((a,b) => b[key] - a[key])
+                        this.setOrder(key);
                 }
             }
         },
