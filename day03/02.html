@@ -10,8 +10,8 @@
         * {margin:0; padding:0}
         li {list-style: none;}
         body {padding:30px;}
-        .list {margin:20px 0;}
-        .list > li {width:200px; border:1px solid gray; padding:10px;}
+        .list {margin:20px 0; display:flex;}
+        .list > li {margin:5px; width:200px; border:1px solid gray; padding:10px;}
         .list > li > * {display:block}
         .list > li > img {width:200px; margin-bottom:20px;}
         .list > li > strong {font-size:20px; color:#666; margin-bottom:10px}
@@ -22,22 +22,47 @@
     <div id="app">
         <h1>Sales Product</h1>
         <ul class="list">
-            <li>
-                <img src="images/mango.jpg" />
-                <strong>천연 오가닉 사과칩</strong>
-                <span>깨끗한 재료를 엄선하여 자연을 그대로 담았습니다.</span>
-                <b>2,000원</b>
-            </li>
+            <product-list></product-list> <!--태그에서는 camel Case를 사용하지 않는다. - 자동으로 변환 오류남.-->
+            <product-list></product-list> 
+            <product-list></product-list> 
         </ul>
     </div>
     <script>
-        Vue.createApp({
+        // 지역 컴포넌트에 사용할 객체
+        const productList = {
+            template: `
+                <li>
+                    <img src="images/mango.jpg" />
+                    <strong>천연 오가닉 사과칩</strong>
+                    <span>깨끗한 재료를 엄선하여 자연을 그대로 담았습니다.</span>
+                    <b>2,000원</b>
+                </li>
+            `,
+        }
+        const app = Vue.createApp({ // 루트 인스턴스
             data() {
                 return {
 
                 }
-            }
-        }).mount('#app')
+            },
+            // 지역 컴포넌트
+            components: {productList} // 키값과 변수명이 같다면 하나만 써도 된다. -> camelcase인 productList를 product-list로 자동 변환해줌. 
+        })
+        // 전역 컴포넌트(용 인스턴스)
+        // app.component('product-list', { 
+        //     template: `
+        //         <li>
+        //             <img src="images/mango.jpg" />
+        //             <strong>천연 오가닉 사과칩</strong>
+        //             <span>깨끗한 재료를 엄선하여 자연을 그대로 담았습니다.</span>
+        //             <b>2,000원</b>
+        //         </li>
+        //     `,
+        // }); // 매개변수 (이름, 옵션)
+
+        app.mount('#app')
+
+
     </script>
 </body>
 </html>
