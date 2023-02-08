@@ -95,48 +95,35 @@
                     week: 83777
                     }
                 ],
-                state: 'ticketing',
-                order: {
-                    ticketing: 'on',
-                    score: '',
-                    openDate: '',
-                    week: '',
-                    sale: '',
-                }
+                state: '예매순',
             }
         },
         computed: {
         },
         methods: {
-            setOrder(cxt) {
+            setOrder(cxt) { // 정렬 하기
                 this.movies = this.movies.sort((a,b) => b[cxt] - a[cxt])
             },
             setContext(ev) { // 상태 바꾸기
                 if (ev.target.tagName !== 'A') return;
 
                 let id = ev.target.id;
-                this.state = id;
-                this.setCurrentTab(ev.target.id)
+                this.state = ev.target.firstChild.textContent;
+                this.setCurrentTab(ev.target.parentNode)
             },
-            setCurrentTab(id) { // on 주기
-                let order_key = Object.keys(this.order);
-                for (let key of order_key) {
-                    this.order[key] = '';
-                    if (key === id) {
-                        this.order[id] = 'on';
-                    }
-                }
+            setCurrentTab(li) { // on 주기
+                document.querySelectorAll('.tab > li').forEach(tab => {
+                    tab.classList.remove('on');
+                })
+                li.classList.add('on');
             }
         },
-        watch: {
-            state(newData, oldData) { // state 변수를 지켜보는 함수
-                // 바뀐 탭에 따라 소팅하기
-                let order_key = Object.keys(this.order)
-                for (let key of order_key) {
-                    if (newData === key)
-                        this.setOrder(key);
+        mounted() {
+            document.querySelectorAll('.tab').forEach(item => {
+                if(item.firstChild.textContent === this.state) {
+                    this.setOrder(item);
                 }
-            }
+            })
         },
         created() {
             for (let i = 0; i < this.movies.length; i++) {           
