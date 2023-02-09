@@ -118,12 +118,29 @@
                 li.classList.add('on');
             }
         },
-        mounted() {
-            document.querySelectorAll('.tab').forEach(item => {
-                if(item.firstChild.textContent === this.state) {
-                    this.setOrder(item);
-                }
-            })
+        watch: {
+            state(newData, oldData) {
+                let cxt = ''
+                    switch (newData) {
+                        case '예매순':
+                            this.setOrder('ticketing');
+                            break
+                        case '평점순':
+                            this.setOrder('score');
+                            break
+                        case '개봉일순':
+                            this.setOrder('openDate');
+                            break
+                        case '주말관객순':
+                            this.setOrder('week');
+                            break
+                        case '다운로드순':
+                            this.setOrder('sale');
+                            break
+                    }
+            }
+                    
+                    
         },
         created() {
             for (let i = 0; i < this.movies.length; i++) {           
